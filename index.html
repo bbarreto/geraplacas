@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<title>Gera Placas</title>
+<link rel="stylesheet" href="vendor/twbs/bootstrap/dist/css/bootstrap.min.css">
+<script src="vendor/components/jquery/jquery.min.js"></script>
+<script src="vendor/twbs/bootstrap/dist/js/bootstrap.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="container m-t-2 m-b-2">
+	<div class="row">
+		<div class="col-md-12 m-b-2">
+			<h1>Gera Placas</h1>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<form method="post" class="form">
+				<div class="form-group">
+					<label>Tipo da placa:</label>
+					<select name="tipo" class="form-control">
+						<option value="">Selecione um tipo</option>
+						<option value="regulamentacao">Regulamentação (R-19)</option>
+						<option value="advertencia">Advertência</option>
+						<option value="indicacao">Indicação de destino</option>
+						<option value="educativo">Placas educativas</option>
+						<option value="referencia">Referência quilométrica</option>
+						<option value="turismo">Atrativo turístico</option>
+						<option value="rodovia">Identificação de rodovia</option>
+						<option value="municipio">Identificação de municípios</option>
+						<option value="servicos">Indicação de serviços auxiliares</option>
+					</select>
+				</div>
+
+				<div class="filtroPlaca regulamentacao">
+					<div class="form-group">
+						<label>Velocidade:</label>
+						<input name="regulamentacao[velocidade]" type="number" value="50" step="10" min="10" max="120" class="form-control">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-md-8">
+
+			<div class="placa regulamentacao">
+				<span class="velocidade">50</span>
+				<span class="unidade">km/h</span>
+			</div>
+
+			<table class="table table-hover m-t-2" id="informacoes">
+				<thead>
+					<tr>
+						<th>Instrução</th>
+						<th>Valor</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+</div>
+
+<script>
+$(window).ready(function () {
+	$("select[name='tipo']").change(function () {
+		$(".filtroPlaca, .placa").hide();
+		$(".filtroPlaca."+$(this).val()+", .placa."+$(this).val()).show();
+		$("#informacoes").hide();
+	});
+
+	$(".filtroPlaca.regulamentacao input, .filtroPlaca.regulamentacao select").change(function () {
+		$(".placa.regulamentacao .velocidade").html($("input[name='regulamentacao[velocidade]'").val());
+
+		$("#informacoes").show();
+		$("#informacoes tbody").html('');
+		codigoDaPlaca();
+		distanciaMinimaVisibilidade();
+		repeticaoDePlaca();
+		alturaDasLetras();
+	});
+});
+
+function distanciaMinimaVisibilidade() {
+
+	if ($("select[name='tipo']").val()=='regulamentacao') {
+		velocidade = $("input[name='regulamentacao[velocidade]'").val();
+	} else {
+		return false;
+	}
+
+	if (velocidade<=40) {
+		valor = 70;
+	} else if (velocidade>40 && velocidade<=60) {
+		valor = 85;
+	} else if (velocidade>60 && velocidade<=80) {
+		valor = 105;
+	} else if (velocidade>80 && velocidade<=100) {
+		valor = 120;
+	} else {
+		valor = 130;
+	}
+
+	$("#informacoes tbody").append('<tr><td>Distância mín. de visibilidade</td><td>'+valor+' metros</td></tr>');
+}
+
+function codigoDaPlaca() {
+	if ($("select[name='tipo']").val()=='regulamentacao') {
+		velocidade = $("input[name='regulamentacao[velocidade]'").val();
+
+		if (velocidade % 10 ==0) {
+			valor = velocidade/10;
+			valor = 'R 19-'+valor;
+		} else {
+			valor = 'R 19';
+		}
+
+	} else {
+		return false;
+	}
+
+	$("#informacoes tbody").append('<tr><td>Código da placa</td><td>'+valor+'</td></tr>');
+}
+
+function repeticaoDePlaca() {
+
+	if ($("select[name='tipo']").val()=='regulamentacao') {
+		velocidade = $("input[name='regulamentacao[velocidade]'").val();
+	} else {
+		return false;
+	}
+
+	intervaloMenor = Math.round(velocidade * (10/60));
+	intervaloMaior = Math.round(velocidade * (12/60));
+
+	$("#informacoes tbody").append('<tr><td>Intervalo de repetição de sinal</td><td>entre '+intervaloMenor+' a '+intervaloMaior+' km</td></tr>');	
+}
+
+function alturaDasLetras() {
+
+	if ($("select[name='tipo']").val()=='regulamentacao') {
+		velocidade = $("input[name='regulamentacao[velocidade]'").val();
+	} else {
+		return false;
+	}
+
+	if (velocidade<=40) {
+		urbanas = 125;
+		rurais = 150;
+	} else if (velocidade>40 && velocidade<80) {
+		urbanas = 150;
+		rurais = 150;
+	} else if (velocidade==80) {
+		urbanas = 200;
+		rurais = 200;
+	} else if (velocidade>80 && velocidade<=100) {
+		urbanas = 250;
+		rurais = 250;
+	} else {
+		urbanas = 'mínimo 250';
+		rurais = 300;
+	}
+
+	$("#informacoes tbody").append('<tr><td>Altura mínima das letras</td><td>'+urbanas+'mm (vias urbanas) ou '+rurais+'mm (vias rurais)</td></tr>');
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+@font-face {
+  font-family: 'serieD';
+  src: url('fonts/serieD.otf');
+}
+
+@font-face {
+  font-family: 'serieE';
+  src: url('fonts/serieE.otf');
+}
+
+.filtroPlaca, .placa, #informacoes {
+	display: none;
+}
+
+.placa.regulamentacao {
+	background: white;
+	position: relative;
+	margin: auto;
+	border: 30px red solid;
+	border-radius: 50%;
+	height: 330px;
+	width: 330px;
+}
+
+.placa.regulamentacao .velocidade {
+	position: absolute;
+    top: 5px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 150px;
+    font-family: 'serieE';
+    letter-spacing: -10px;
+}
+
+.placa.regulamentacao .unidade {
+	position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    font-size: 60px;
+    font-family: 'serieE';
+    text-transform: uppercase;
+}
