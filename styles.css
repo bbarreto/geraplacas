@@ -24,22 +24,78 @@
 
 .placa.regulamentacao .velocidade {
 	position: absolute;
-    top: 5px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 150px;
-    font-family: 'serieE';
-    letter-spacing: -10px;
+  top: 5px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 150px;
+  font-family: 'serieE';
+  letter-spacing: -10px;
 }
 
 .placa.regulamentacao .unidade {
 	position: absolute;
-    bottom: 15px;
-    left: 0;
-    width: 100%;
-    text-align: center;
-    font-size: 60px;
-    font-family: 'serieE';
-    text-transform: uppercase;
+  bottom: 15px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 60px;
+  font-family: 'serieE';
+  text-transform: uppercase;
+}
+
+.placa.referencia_km {
+  background: #0086CD;
+  width: 150px;
+  height: 230px;
+  border-radius: 8%;
+  font-family: 'serieE';
+  color: white;
+  position: relative;
+  margin: auto;
+}
+
+.placa.referencia_km .km {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 70px;
+  letter-spacing: -5px;
+  height: 85px;
+}
+
+.placa.referencia_km .km:before {
+  content: "km";
+  position: absolute;
+  bottom: 60px;
+  letter-spacing: 0;
+  font-size: 48px;
+  width: 100%;
+  left: 0;
+}
+
+.placa.referencia_km .direcao {
+  position: absolute;
+  text-transform: uppercase;
+  top: 18px;
+  width: 90%;
+  text-align: center;
+  font-size: 35px;
+  letter-spacing: -1px;
+  border-bottom: 4px white solid;
+  left: 5%;
+}
+
+.placa.referencia_km:before {
+    display: block;
+    position: absolute;
+    content: "";
+    top: 3%;
+    left: 3%;
+    border: 4px white solid;
+    width: 94%;
+    height: 94%;
+    border-radius: 7%;
 }

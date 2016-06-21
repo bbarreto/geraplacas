@@ -29,7 +29,7 @@
 						<option value="advertencia" disabled>Advertência</option>
 						<option value="indicacao" disabled>Indicação de destino</option>
 						<option value="educativo" disabled>Placas educativas</option>
-						<option value="referencia" disabled>Referência quilométrica</option>
+						<option value="referencia_km">Referência quilométrica</option>
 						<option value="turismo" disabled>Atrativo turístico</option>
 						<option value="rodovia" disabled>Identificação de rodovia</option>
 						<option value="municipio" disabled>Identificação de municípios</option>
@@ -43,6 +43,22 @@
 						<input name="regulamentacao[velocidade]" type="range" value="50" step="1" min="0" max="150" class="form-control">
 					</div>
 				</div>
+
+				<div class="filtroPlaca referencia_km">
+					<div class="form-group">
+						<label>Referência quilométrica:</label>
+						<input name="referencia_km[km]" type="number" value="5" step="1" min="1" class="form-control">
+					</div>
+					<div class="form-group">
+						<label>Direção:</label>
+						<select name="referencia_km[direcao]" class="form-control">
+							<option value="Norte">Norte</option>
+							<option value="Sul">Sul</option>
+							<option value="Leste">Leste</option>
+							<option value="Oeste">Oeste</option>
+						</select>
+					</div>
+				</div>
 			</form>
 		</div>
 		<div class="col-md-8">
@@ -50,6 +66,11 @@
 			<div class="placa regulamentacao">
 				<span class="velocidade">50</span>
 				<span class="unidade">km/h</span>
+			</div>
+
+			<div class="placa referencia_km">
+				<span class="km">5</span>
+				<span class="direcao">Norte</span>
 			</div>
 
 			<table class="table table-hover m-t-2" id="informacoes">
@@ -75,15 +96,20 @@ $(window).ready(function () {
 		$("#informacoes").hide();
 	});
 
-	$(".filtroPlaca.regulamentacao input, .filtroPlaca.regulamentacao select").change(function () {
+	$(".filtroPlaca.regulamentacao input").change(function () {
 		$(".placa.regulamentacao .velocidade").html($("input[name='regulamentacao[velocidade]'").val());
-
 		$("#informacoes").show();
 		$("#informacoes tbody").html('');
 		codigoDaPlaca();
 		distanciaMinimaVisibilidade();
 		repeticaoDePlaca();
 		alturaDasLetras();
+	});
+
+	$(".filtroPlaca.referencia_km input, .filtroPlaca.referencia_km select").change(function () {
+		$(".placa.referencia_km .km").html($("input[name='referencia_km[km]'").val());
+		$(".placa.referencia_km .direcao").html($("select[name='referencia_km[direcao]'").val());
+		$("#informacoes").hide();
 	});
 });
 
